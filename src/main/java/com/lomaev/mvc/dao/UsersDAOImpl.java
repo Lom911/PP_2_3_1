@@ -14,7 +14,6 @@ import java.util.List;
 public class UsersDAOImpl implements UsersDAO {
 
     private final SessionFactory sessionFactory;
-
     @Autowired
     public UsersDAOImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
