@@ -13,8 +13,9 @@ import java.util.List;
 @Repository
 public class UsersDAOImpl implements UsersDAO {
 
-private final SessionFactory sessionFactory;
-@Autowired
+    private final SessionFactory sessionFactory;
+
+    @Autowired
     public UsersDAOImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
@@ -33,6 +34,24 @@ private final SessionFactory sessionFactory;
     @Override
     public void saveUser(Users users) {
         Session session = sessionFactory.getCurrentSession();
-        session.save(users);
+        session.saveOrUpdate(users);
     }
+
+    @Override
+    public Users getUsers(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        Users users = session.get(Users.class, id);
+        return users;
+    }
+
+    @Override
+    public void deleteUser(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        Query<Users> query = session.createQuery("delete from Users where id =:userId");
+        query.setParameter("userId", id);
+        query.executeUpdate();
+//        List<Users> allUsers = query.getResultList();
+    }
+
+
 }

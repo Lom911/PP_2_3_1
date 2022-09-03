@@ -34,19 +34,25 @@ public class MyController {
     public String AddUser(Model model) {
         Users adduser = new Users();
         model.addAttribute("adduser", adduser);
-
         return "userinfo";
     }
 
     @RequestMapping("/saveUser")
     public String SaveUser(@ModelAttribute("adduser") Users users) {
         userService.saveUser(users);
-
         return "redirect:/users";
     }
 
     @RequestMapping("/updateUser")
     public String updateUser(@RequestParam("empId") int id, Model model) {
+        Users users = userService.getUser(id);
+        model.addAttribute("adduser", users);
         return "userinfo";
+    }
+
+    @RequestMapping("/deleteUser")
+    public String deleteUser(@RequestParam("usrId") int id, Model model){
+        userService.deleteUser(id);
+        return "redirect:/users";
     }
 }
